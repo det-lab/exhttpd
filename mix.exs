@@ -28,9 +28,12 @@ defmodule Exhttpd.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:httpoison, git: "https://github.com/edgurgel/httpoison.git"},
+    [{:hackney, "~> 1.6.0", override: true},
+     {:erlware_commons, github: "erlware/erlware_commons", override: true},
+     {:cf, "~> 0.2.0", override: true},
+     {:httpoison, git: "https://github.com/edgurgel/httpoison.git"},
      {:cowboy, "~> 1.0.0"},
      {:plug, "~> 1.0"},
-     {:exrm, "~> 1.0"}]
+     {:exrm, "~> 1.0.3"}]
   end
 end
