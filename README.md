@@ -43,3 +43,11 @@ $ ./rel/exhttpd/bin/exhttpd start
 $ ./rel/exhttpd/bin/exhttpd ping
 $ ./rel/exhttpd/bin/exhttpd remote_console
 ```
+
+# start the app with iex console
+$ iex -S mix
+# start the app in terminal
+$ mix run --no-halt
+# start detached app
+$ elixir --detached -S mix run --no-halt
+

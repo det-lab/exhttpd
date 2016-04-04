@@ -27,13 +27,14 @@ defmodule Exhttpd.Mixfile do
   #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
   #
   # Type "mix help deps" for more examples and options
+  # something in here wants erlware_commons to be at 0.19.0
+  # not sure what (relx?)
+  # had to edit _build/dev/lib/erlware_commons/ebin/erlware_commons.app
+  # (part) of this issue discussed at https://github.com/bitwalker/exrm/issues/294
   defp deps do
-    [{:hackney, "~> 1.6.0", override: true},
-     {:erlware_commons, github: "erlware/erlware_commons", override: true},
-     {:cf, "~> 0.2.0", override: true},
+    [
      {:httpoison, git: "https://github.com/edgurgel/httpoison.git"},
      {:cowboy, "~> 1.0.0"},
-     {:plug, "~> 1.0"},
-     {:exrm, "~> 1.0.3"}]
+     {:plug, "~> 1.0"}]
   end
 end
