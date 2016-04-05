@@ -22,6 +22,13 @@ defmodule Exhttpd.Router do
     send_resp(conn, 200, resp)
   end
 
+  get "/" do
+    conn = fetch_query_params(conn, [])
+    #send_resp(conn, 200, "received #{inspect conn.params}")
+    send_resp(conn, 200, "received #{conn.params["cmd"]}, #{conn.params["val"]}")
+  end
+
+
   # everything else
   get _ do
     send_resp(conn, 404, "these are not the droids you're looking for.")
