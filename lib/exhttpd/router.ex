@@ -37,7 +37,7 @@ defmodule Exhttpd.Router do
     unless String.contains? resp, ["not found"] do
       [name, type, num_values, item_size, last_written, open, mode, value] 
         = resp
-        |> String.replace(resp, ~r/\A.+\s+-+\s+/gm, '')
+        |> String.replace(resp, ~r/\A.+-+\W+/ms, '')
         |> String.split()
 
       send_resp(conn, 200, "received #{cmd}, #{odbkey}")
