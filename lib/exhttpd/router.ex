@@ -23,30 +23,35 @@ defmodule Exhttpd.Router do
   end
 
   get "/" do
-    conn = fetch_query_params(conn, [])
-    %{"cmd" => cmd, "odb" => odbkey} = conn.params
+    params = fetch_query_params(conn, []).params
+    #%{@cmd => cmd, @odb => odbkey} = conn.params
+    cmd = params["cmd"]
+    odbkey = params["odb"]
 
     #http://andrealeopardi.com/posts/tokenizing-and-parsing-in-elixir-using-leex-and-yecc/
     #odbedit response is
     #Key name                        Type    #Val  Size  Last Opn Mode Value
     #---------------------------------------------------------------------------
     #State                           INT     1     4     35h  0   RWD  1
-    sys_cmd = "odbedit -c -l ls '#{odbkey}'"
-    {resp, _} = System.cmd sys_cmd, []
+    
+    sys_cmd = "/home1/aroberts/exhttpd.git/server_scripts/get_odb.sh"
+    {resp, _} = System.cmd sys_cmd, [odbkey]
 
     unless String.contains? resp, ["not found"] do
       [name, type, num_values, item_size, last_written, open, mode, value] 
         = resp
-        |> String.replace(resp, ~r/\A.+-+\W+/ms, '')
+	|> to_string
+        |> String.replace(~r/\A.+-+\W+/ms, "")
         |> String.split()
 
-      send_resp(conn, 200, "received #{cmd}, #{odbkey}")
+      send_resp(conn, 200, "#{name} has value #{value}")
     else 
       send_resp(conn, 200, "<DB_NO_KEY>")
     end
 
+    #send_resp(conn, 200, "received #{resp}")
     #send_resp(conn, 200, "received #{inspect conn.params}")
-    #send_resp(conn, 200, "received #{cmd}, #{odbkey}")
+    #send_resp(conn, 200, "received #{params['cmd']}, #{params['odb']}")
   end
 
 
