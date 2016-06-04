@@ -45,8 +45,13 @@ defmodule Exhttpd.Router do
     #---------------------------------------------------------------------------
     #State                           INT     1     4     35h  0   RWD  1
     
-    sys_cmd = "/home1/aroberts/exhttpd.git/server_scripts/get_odb.sh"
-    {resp, _} = System.cmd sys_cmd, [odbkey]
+    sys_cmd = "/home1/aroberts/exhttpd.git/server_scripts/odb.py"
+    #env_enum = [{"MIDASSYS", "/home1/aroberts/cdms_midas.git"}]
+    #env_enum ++ [{"MIDAS_EXPTAB", "home1/aroberts/test_expt/online/exptab"}]
+    #env_enum ++ [{"MIDAS_ONLINE", "home1/aroberts/test_expt/online"}]
+    #{resp, _} = System.cmd sys_cmd, ["get", odbkey], env: env_enum 
+    {resp, _} = System.cmd sys_cmd, ["get", odbkey]  
+    
 
     unless String.contains? resp, ["not found"] do
       [name, type, num_values, item_size, last_written, open, mode, value] 
@@ -58,6 +63,7 @@ defmodule Exhttpd.Router do
       send_resp(conn, 200, "#{name} has value #{value}")
     else 
       send_resp(conn, 200, "<DB_NO_KEY>")
+      #send_resp(conn, 200, resp)
     end
 
     #send_resp(conn, 200, "received #{resp}")

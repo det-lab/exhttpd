@@ -44,3 +44,12 @@ amy      26595  0.6  0.6 1073092 50180 ?       Sl   14:00   0:02 /usr/lib/erlang
 amy@nightjar ~/docs.git> kill 26595
 ```
 
+## Using the application
+
+Querying ODB parameters with spaces will require inserting the "space" character:
+
+```
+curl "http://localhost:4000?cmd=jkey&odb=/Coupla%20sprogs"
+```
+
+Note that this is done automatically by XMLHttpRequest.
