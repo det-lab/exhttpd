@@ -1,7 +1,18 @@
 defmodule Exhttpd.Router do
+  @moduledoc """
+  exhttpd is intended to be a server that works as a drop-in replacement to mhttpd.
+
+  A request to localhost:4000/CS/ serves static files
+  Requests to localhost:4000/SEQ/ are proxied to mhttpd
+  Requests to localhost:4000/cmd=X are handled with (1) a call to System.cmd and (2) a script that uses a command-line odbedit
+
+  Implemented odbedit commands are start, stop, msg, jkey, jset, jcopy, and jcreate.
+
+  """
+
   use Plug.Router
 
-  plug Plug.Static, at: "/static", from: "/home/amy/ui_dcrc_clone.git/online/"
+  plug Plug.Static, at: "/CS", from: "/home/amy/ui_dcrc_clone.git/online/"
   plug :match
   plug :dispatch
 
